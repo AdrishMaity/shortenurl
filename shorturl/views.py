@@ -4,6 +4,7 @@ import requests
 import json
 import urllib
 from bs4 import BeautifulSoup
+from .models import ShortenURL
 
 
 
@@ -39,6 +40,15 @@ def homePage(request):
                 result_data = json_data['shortenedUrl']
                 print(result_data)
                 error = False
+
+
+                # Save the search result in databases
+                curObject = ShortenURL(linkTitle = soup.title.string,
+                                        urlToBeShortened = enteredURL,
+                                        shortenedUrl = result_data
+                                        )
+                curObject.save()
+
 
         else:
             result_data = ''

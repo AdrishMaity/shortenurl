@@ -8,7 +8,7 @@ class ShortenURL(models.Model):
         verbose_name_plural = "Shorten URL"
 
     def __str__(self):
-        return self.id + '_' + self.linkTitle
+        return str(self.id) + '_' + self.linkTitle
 
     linkTitle = models.CharField(max_length=100, default="A Site")
     urlToBeShortened = models.CharField(max_length=500, validators=[URLValidator()])
