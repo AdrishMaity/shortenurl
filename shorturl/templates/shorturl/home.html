@@ -2,30 +2,59 @@
 
 {% block content %}
 
-<h1>This is homepage</h1>
-
+<style media="screen">
+  #id_url{
+    min-width: 20em;
+  }
+</style>
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-lg-12 col-sm-12">
       <a href="{% url 'home' %}">
-          <h1 style="text-align: center">Shorten Your URL</h1>
+          <h2 style="text-align: center">Shorten Your URL</h2>
       </a>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-lg-12 col-sm-12">
+    <div class="col-lg-12 col-sm-12" style="text-align: center;">
       <form method="post">
         {% csrf_token %}
         {% for field in url_form %}
           <div class="form-group">
-            {{ field.label_tag }}<br>
-            {{ field }}
+
+            <div class="row">
+                <div class="col-lg-12" style="text-align: center;">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" style="text-align: center;">
+                  {{ field }}
+                </div>
+            </div>
+
           </div>
         {% endfor %}
-        <button type="submit" name="btn_login" class="btn btn-success mb-3">Log In</button>
+        <button type="submit" name="btn_login" class="btn btn-success mb-3">Shorten URL</button>
       </form>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-lg-12 col-sm-12">
+        {% if error %}
+            <div class="alert alert-danger" style="text-align: center">
+              <strong>We failed to reach <a href="{{ url_entered }}" class="alert-link">{{ url_entered }}</a>. </strong> <a href="#" class="alert-link">Reason: {{ error }}</a>.
+            </div>
+        {% else %}
+          {% if result %}
+            <div class="alert alert-success" style="text-align: center">
+              <strong>We have created the short link: </strong> <a href="{{ result }}" class="alert-link">{{ result }}</a>.
+            </div>
+          {% endif %}
+        {% endif %}
     </div>
   </div>
 
